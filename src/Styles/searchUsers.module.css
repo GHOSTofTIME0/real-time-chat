@@ -1,0 +1,294 @@
+.container {
+    width: 100vw;
+    min-height: 100vh;
+    margin: 0;
+    padding: 20px;
+    font-family: 'Arial', sans-serif;
+    background-color: #f8f9fa;
+    box-sizing: border-box;
+}
+
+.searchSection {
+    background: white;
+    padding: 30px;
+    border-radius: 12px;
+    box-shadow: 0 4px 15px rgba(0, 0, 0, 0.1);
+    margin-bottom: 30px;
+    width: 100%;
+    box-sizing: border-box;
+}
+
+.title {
+    text-align: center;
+    color: #333;
+    margin-bottom: 30px;
+    font-size: 2.5rem;
+    font-weight: 300;
+}
+
+.searchForm {
+    display: flex;
+    gap: 15px;
+    max-width: 600px;
+    margin: 0 auto;
+    width: 100%;
+}
+
+.searchInput {
+    flex: 1;
+    padding: 15px 20px;
+    font-size: 1.1rem;
+    border: 2px solid #e1e5e9;
+    border-radius: 8px;
+    outline: none;
+    transition: all 0.3s ease;
+    width: 100%;
+    box-sizing: border-box;
+}
+
+.searchInput:focus {
+    border-color: #007bff;
+    box-shadow: 0 0 0 3px rgba(0, 123, 255, 0.1);
+}
+
+.searchButton {
+    padding: 15px 30px;
+    background: linear-gradient(135deg, #007bff, #0056b3);
+    color: white;
+    border: none;
+    border-radius: 8px;
+    font-size: 1.1rem;
+    font-weight: 600;
+    cursor: pointer;
+    transition: all 0.3s ease;
+    white-space: nowrap;
+}
+
+.searchButton:hover {
+    background: linear-gradient(135deg, #0056b3, #004085);
+    transform: translateY(-2px);
+    box-shadow: 0 4px 12px rgba(0, 123, 255, 0.3);
+}
+
+.resultsSection {
+    background: white;
+    padding: 30px;
+    border-radius: 12px;
+    box-shadow: 0 4px 15px rgba(0, 0, 0, 0.1);
+    width: 100%;
+    box-sizing: border-box;
+}
+
+.resultsTitle {
+    color: #333;
+    margin-bottom: 20px;
+    font-size: 1.5rem;
+    font-weight: 600;
+    border-bottom: 2px solid #007bff;
+    padding-bottom: 10px;
+}
+
+/* ОДИН ПОЛЬЗОВАТЕЛЬ НА СТРОКУ */
+.usersList {
+    display: flex;
+    flex-direction: column;
+    gap: 15px;
+    width: 100%;
+}
+
+.userLink {
+    text-decoration: none;
+    color: black;
+
+    display: block;
+    transition: all 0.3s ease;
+    width: 100%;
+}
+
+.userLink:hover {
+    transform: translateX(5px);
+}
+
+.userCard {
+    background: white;
+    border: 1px solid #e1e5e9;
+    border-radius: 12px;
+    padding: 20px;
+    transition: all 0.3s ease;
+    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+    width: 100%;
+    box-sizing: border-box;
+}
+
+.userCard:hover {
+    box-shadow: 0 4px 15px rgba(0, 0, 0, 0.15);
+    border-color: #007bff;
+}
+
+/* СТИЛИ ДЛЯ ОТОБРАЖЕНИЯ С АВАТАРОМ СЛЕВА */
+.userContent {
+    display: flex;
+    align-items: center;
+    gap: 20px;
+    width: 100%;
+    margin-bottom: 10px;
+}
+
+.userAvatar {
+    width: 80px;
+    height: 80px;
+    border-radius: 50%;
+    object-fit: cover;
+    border: 3px solid #007bff;
+    flex-shrink: 0;
+}
+
+.userInfo {
+    flex: 1;
+    display: flex;
+    flex-direction: column;
+    gap: 8px;
+}
+
+.userName {
+    font-size: 1.4rem;
+    font-weight: 600;
+    color: #333;
+    margin: 0;
+}
+
+.userEmail {
+    color: #666;
+    font-size: 1.1rem;
+    margin: 0;
+}
+
+.userDetails {
+    display: flex;
+    gap: 20px;
+    flex-wrap: wrap;
+}
+
+.userDetail {
+    display: flex;
+    align-items: center;
+    gap: 5px;
+    font-size: 0.9rem;
+}
+
+.detailLabel {
+    color: #888;
+    font-weight: 500;
+}
+
+.detailValue {
+    color: #333;
+    font-weight: 600;
+}
+
+.loadingContainer {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 200px;
+    width: 100%;
+}
+
+.noResults {
+    text-align: center;
+    padding: 40px;
+    color: #666;
+    font-size: 1.2rem;
+    width: 100%;
+}
+
+.noResults p {
+    margin: 0;
+}
+
+.errorMessage {
+    background: #f8d7da;
+    color: #721c24;
+    padding: 15px 20px;
+    border-radius: 8px;
+    border: 1px solid #f5c6cb;
+    margin-bottom: 20px;
+    text-align: center;
+    width: 100%;
+    box-sizing: border-box;
+}
+
+.stats {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 20px;
+    padding: 15px;
+    background: #e9ecef;
+    border-radius: 8px;
+    font-size: 0.9rem;
+    color: #495057;
+    width: 100%;
+    box-sizing: border-box;
+}
+
+.totalUsers {
+    font-weight: 600;
+}
+
+.clearButton {
+    background: #6c757d;
+    color: white;
+    border: none;
+    padding: 8px 16px;
+    border-radius: 6px;
+    cursor: pointer;
+    font-size: 0.9rem;
+    transition: background-color 0.3s;
+}
+
+.clearButton:hover {
+    background: #545b62;
+}
+
+@media (max-width: 768px) {
+    .container {
+        padding: 10px;
+    }
+
+    .searchForm {
+        flex-direction: column;
+    }
+
+    .searchInput {
+        font-size: 1rem;
+    }
+
+    .searchButton {
+        padding: 12px 20px;
+    }
+
+    .userContent {
+        flex-direction: column;
+        text-align: center;
+        gap: 15px;
+    }
+
+    .userAvatar {
+        width: 60px;
+        height: 60px;
+    }
+
+    .userDetails {
+        justify-content: center;
+    }
+
+    .searchSection,
+    .resultsSection {
+        padding: 20px;
+    }
+
+    .title {
+        font-size: 2rem;
+    }
+}
