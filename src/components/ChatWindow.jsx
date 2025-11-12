@@ -8,10 +8,9 @@ const ChatWindow = () => {
     const [showMembers, setShowMembers] = useState(false);
     const messagesEndRef = useRef(null);
 
-    const { activeChat, messages, currentUser, allUsers } = useSelector(state => state.chat);
+    const { activeChat, messages, currentUser, allUsers, groupChannels } = useSelector(state => state.chat);
     const dispatch = useDispatch();
 
-    // Автоскролл к новым сообщениям
     const scrollToBottom = () => {
         messagesEndRef.current?.scrollIntoView({ behavior: "smooth" });
     };
@@ -20,7 +19,6 @@ const ChatWindow = () => {
         scrollToBottom();
     }, [messages, activeChat]);
 
-    // Отмечаем сообщения как прочитанные при открытии чата
     useEffect(() => {
         if (activeChat) {
             dispatch(markMessagesAsRead({ chatId: activeChat.id }));
@@ -41,22 +39,22 @@ const ChatWindow = () => {
 
     const handleRemoveMember = (userId) => {
         if (activeChat?.type === 'group' && activeChat.creatorId === currentUser.id) {
-            if (window.confirm('Are you sure you want to remove this member?')) {
-                console.log('Removing member:', userId);
-                console.log('Current channel:', activeChat);
-                console.log('Current members before removal:', activeChat.members);
+            console.log('входит')
+            console.log('Removing member:', userId);
+            console.log('Current channel:', activeChat);
+            console.log('Current members before removal:', activeChat.members);
+            console.log(activeChat.id + ' ' + userId);
+            const numericUserId = Number(userId);
+            dispatch(removeChannelMember({
+                channelId: activeChat.id,
+                userId: numericUserId,
+            }))
 
-                dispatch(removeChannelMember({
-                    channelId: activeChat.id,
-                    userId: userId
-                }));
+            setTimeout(() => {
+                const updatedChat = groupChannels.find(c => c.id === activeChat.id);
+                console.log('Members after removal:', updatedChat?.members);
+            }, 100);
 
-                // После диспатча выводим обновленные данные
-                setTimeout(() => {
-                    const updatedChat = groupChannels.find(c => c.id === activeChat.id);
-                    console.log('Members after removal:', updatedChat?.members);
-                }, 100);
-            }
         }
     };
 
@@ -67,7 +65,6 @@ const ChatWindow = () => {
         });
     };
 
-    // Получаем участников группового чата
     const getChannelMembers = () => {
         if (activeChat?.type === 'group') {
             return allUsers.filter(user =>
@@ -123,7 +120,6 @@ const ChatWindow = () => {
                     )}
                 </div>
 
-                {/* Действия для группового чата */}
                 {activeChat.type === 'group' && (
                     <div className={styles.chatActions}>
                         <button
@@ -141,9 +137,7 @@ const ChatWindow = () => {
                 )}
             </div>
 
-            {/* Основной контент */}
             <div className={styles.chatContent}>
-                {/* Список сообщений */}
                 <div className={`${styles.messagesContainer} ${showMembers ? styles.withMembers : ''}`}>
                     <div className={styles.messagesList}>
                         {chatMessages.map((message) => (
@@ -184,7 +178,6 @@ const ChatWindow = () => {
                     </div>
                 </div>
 
-                {/* Список участников (только для групповых чатов) */}
                 {activeChat.type === 'group' && showMembers && (
                     <div className={styles.membersSidebar}>
                         <div className={styles.membersHeader}>
@@ -230,7 +223,6 @@ const ChatWindow = () => {
                 )}
             </div>
 
-            {/* Поле ввода сообщения */}
             <form onSubmit={handleSendMessage} className={styles.messageInputForm}>
                 <div className={styles.inputContainer}>
                     <input

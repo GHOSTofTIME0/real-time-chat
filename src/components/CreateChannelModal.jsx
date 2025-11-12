@@ -12,7 +12,6 @@ const CreateChannelModal = ({ onClose, availableUsers }) => {
     const dispatch = useDispatch();
     const { currentUser } = useSelector(state => state.chat);
 
-    // Фильтрация пользователей по поиску
     const filteredUsers = availableUsers.filter(user =>
         user.name.toLowerCase().includes(searchTerm.toLowerCase()) ||
         user.username.toLowerCase().includes(searchTerm.toLowerCase())
@@ -32,7 +31,7 @@ const CreateChannelModal = ({ onClose, availableUsers }) => {
         if (channelName.trim() && selectedUsers.length > 0) {
             dispatch(createGroupChannel({
                 name: channelName.trim(),
-                userIds: [...selectedUsers, currentUser.id] // Добавляем создателя в участники
+                userIds: [...selectedUsers, currentUser.id]
             }));
             onClose();
         }
@@ -54,7 +53,6 @@ const CreateChannelModal = ({ onClose, availableUsers }) => {
                 </div>
 
                 <form onSubmit={handleCreateChannel} className={styles.channelForm}>
-                    {/* Поле названия канала */}
                     <div className={styles.formGroup}>
                         <label htmlFor="channelName">Channel Name</label>
                         <input
@@ -68,7 +66,6 @@ const CreateChannelModal = ({ onClose, availableUsers }) => {
                         />
                     </div>
 
-                    {/* Поиск пользователей */}
                     <div className={styles.formGroup}>
                         <label>Add Members</label>
                         <input
@@ -80,7 +77,6 @@ const CreateChannelModal = ({ onClose, availableUsers }) => {
                         />
                     </div>
 
-                    {/* Список выбранных пользователей */}
                     {selectedUsers.length > 0 && (
                         <div className={styles.selectedUsers}>
                             <h4>Selected Members ({selectedUsers.length})</h4>
@@ -111,7 +107,6 @@ const CreateChannelModal = ({ onClose, availableUsers }) => {
                         </div>
                     )}
 
-                    {/* Список доступных пользователей */}
                     <div className={styles.usersList}>
                         {filteredUsers.map(user => (
                             <div
@@ -159,7 +154,6 @@ const CreateChannelModal = ({ onClose, availableUsers }) => {
                         )}
                     </div>
 
-                    {/* Кнопки действий */}
                     <div className={styles.modalActions}>
                         <button
                             type="button"

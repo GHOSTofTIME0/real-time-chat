@@ -14,7 +14,6 @@ const ChatsList = () => {
     const [showUserList, setShowUserList] = useState(false);
     const [showCreateChannel, setShowCreateChannel] = useState(false);
     const [searchTerm, setSearchTerm] = useState('');
-    const { activeChat } = useSelector(state => state.chat);
 
     const {
         allUsers,
@@ -27,18 +26,15 @@ const ChatsList = () => {
 
     const dispatch = useDispatch();
 
-    // Загружаем пользователей при монтировании
     useEffect(() => {
         dispatch(fetchUsers());
     }, [dispatch]);
 
-    // Пользователи, с которыми еще нет чата
     const availableUsers = allUsers.filter(user =>
         user.id !== currentUser.id &&
         !directChats.find(chat => chat.userId === user.id)
     );
 
-    // Фильтрация пользователей по поиску
     const filteredUsers = availableUsers.filter(user =>
         user.name.toLowerCase().includes(searchTerm.toLowerCase()) ||
         user.username.toLowerCase().includes(searchTerm.toLowerCase())
@@ -52,7 +48,6 @@ const ChatsList = () => {
 
     const handleChatClick = (chat) => {
         dispatch(setActiveChat(chat));
-        // В реальном приложении здесь будет переход на страницу чата
     };
 
     const formatLastMessage = (lastMessage) => {
@@ -97,7 +92,6 @@ const ChatsList = () => {
 
     return (
         <div className={styles.container}>
-            {/* Заголовок и кнопки действий */}
             <div className={styles.header}>
                 <h1>Chats</h1>
                 <div className={styles.actions}>
@@ -118,12 +112,10 @@ const ChatsList = () => {
                 </div>
             </div>
 
-            {/* Информация о загруженных пользователях */}
             <div className={styles.stats}>
                 <span>{allUsers.length} users available</span>
             </div>
 
-            {/* Список чатов */}
             <div className={styles.chatsSection}>
                 <h2>Direct Messages</h2>
                 {directChats.length === 0 ? (
@@ -176,7 +168,6 @@ const ChatsList = () => {
                 )}
             </div>
 
-            {/* Групповые каналы */}
             <div className={styles.chatsSection}>
                 <h2>Channels</h2>
                 {groupChannels.length === 0 ? (
@@ -225,7 +216,6 @@ const ChatsList = () => {
                 )}
             </div>
 
-            {/* Модальное окно выбора пользователя для чата */}
             {showUserList && (
                 <div className={styles.modalOverlay}>
                     <div className={styles.modal}>
@@ -290,7 +280,6 @@ const ChatsList = () => {
                 </div>
             )}
 
-            {/* Модальное окно создания канала */}
             {showCreateChannel && (
                 <CreateChannelModal
                     onClose={() => setShowCreateChannel(false)}

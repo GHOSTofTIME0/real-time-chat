@@ -61,16 +61,51 @@ const chatSlice = createSlice({
                 state.messages[newChannel.id] = [];
             }
         },
-        removeChannelMember: (state, action) => {
+        removeChannelMember: (state, action) => { //I couldn't fix it. I spent a lot of hours. I would like to analyze this in an interview.
             const { channelId, userId } = action.payload;
-            const channel = state.groupChannels.find(channel = channel.id = channelId);
 
-            if (channel && channel.creatorId === state.currentUser.id) {
-                channel.members = channel.members.filter(id => id !== userId);
-                channel.memberDetails = channel.memberDetails.filter(user => user.id !== userId);
+            console.log('=== REDUX: removeChannelMember PRECISE ===');
+            console.log('User ID to remove:', userId, 'type:', typeof userId);
+
+            const channel = state.groupChannels.find(c => c.id === channelId);
+            if (!channel) {
+                console.log(' Channel not found');
+                return;
             }
-        },
 
+            console.log('Channel members BEFORE:', channel.members);
+            console.log('Member types:', channel.members.map(id => `${id} (${typeof id})`));
+
+            if (channel.creatorId !== state.currentUser.id) {
+                console.log(' User is not channel creator');
+                return;
+            }
+
+            const normalizeForComparison = (id) => String(id);
+            const targetId = normalizeForComparison(userId);
+            console.log('Target ID for comparison:', targetId);
+
+            const initialMembersCount = channel.members.length;
+            channel.members = channel.members.filter(memberId =>
+                normalizeForComparison(memberId) !== targetId
+            );
+
+            channel.memberDetails = channel.memberDetails.filter(member =>
+                normalizeForComparison(member.id) !== targetId
+            );
+
+            const removedCount = initialMembersCount - channel.members.length;
+            console.log(`Removed ${removedCount} member(s)`);
+            console.log('Channel members AFTER:', channel.members);
+
+            if (state.activeChat?.id === channelId) {
+                state.activeChat.members = channel.members;
+                state.activeChat.memberDetails = channel.memberDetails;
+                console.log('Active chat updated');
+            }
+
+            console.log(' Member removed successfully');
+        },
         setActiveChat: (state, action) => {
             state.activeChat = action.payload;
         },
@@ -127,7 +162,6 @@ const chatSlice = createSlice({
                 }
                 state.messages[chatId].push(newMessage);
 
-                // Обновляем последнее сообщение
                 const updateLastMessage = (chatArray) => {
                     const chat = chatArray.find(c => c.id === chatId);
                     if (chat) {
@@ -137,7 +171,6 @@ const chatSlice = createSlice({
                             senderName: sender.name
                         };
 
-                        // Увеличиваем счетчик непрочитанных если чат не активен
                         if (state.activeChat?.id !== chatId) {
                             chat.unreadCount += 1;
                         }
@@ -149,7 +182,6 @@ const chatSlice = createSlice({
             }
         },
 
-        // Отметка сообщений как прочитанных
         markMessagesAsRead: (state, action) => {
             const { chatId } = action.payload;
             const chatMessages = state.messages[chatId];
@@ -162,7 +194,6 @@ const chatSlice = createSlice({
                 });
             }
 
-            // Сбрасываем счетчик непрочитанных
             const resetUnreadCount = (chatArray) => {
                 const chat = chatArray.find(c => c.id === chatId);
                 if (chat) {
@@ -174,7 +205,6 @@ const chatSlice = createSlice({
             resetUnreadCount(state.groupChannels);
         },
 
-        // Удаление чата
         deleteChat: (state, action) => {
             const { chatId } = action.payload;
             state.directChats = state.directChats.filter(chat => chat.id !== chatId);

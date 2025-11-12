@@ -9,18 +9,21 @@ import ChatsPage from './ChatsPage'
 
 const AppRouter = () => {
     return (
-        <div>
+        <div className="app">
             <BrowserRouter>
                 <NavBar />
-                <Routes>
-                    <Route path='/usersList' element={<SearchUsers />} />
-                    <Route path='/user/:userId' element={<UserProfile />} />
-                    <Route path='*' element={<ChatsPage />} />
-                    <Route path='/chats' element={<ChatsPage />} />
-                </Routes>
+                <main className="main-content">
+                    <Routes>
+                        <Route path='/usersList' element={<SearchUsers />} />
+                        <Route path='/user/:userId' element={<UserProfile />} />
+                        <Route path='*' element={<ChatsPage />} />
+                        <Route path='/chats' element={<ChatsPage />} />
+                        <Route path='/' element={<ChatsPage />} />
+                    </Routes>
+                </main>
             </BrowserRouter>
         </div>
-    )
-}
+    );
+};
 
 export default AppRouter

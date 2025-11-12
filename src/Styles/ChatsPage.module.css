@@ -79,7 +79,6 @@
     opacity: 0.8;
 }
 
-/* Адаптивность */
 @media (max-width: 768px) {
     .chatsPage {
         flex-direction: column;
